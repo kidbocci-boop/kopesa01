@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopesa Express</title>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Folha de Estilos Kopesa -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ELEMENTO FLUTUANTE ANIMADO (ÍCONE DE MOVIMENTO) -->
+    <div class="floating-widget" title="Kopesa Express Rápido" onclick="irParaMarketplace()">
+        <i class="fas fa-truck-fast icon-moving"></i>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- TOPO / HEADER DA APLICAÇÃO -->
+    <header class="app-header">
+        <div class="logo-texto" onclick="irParaHome()">
+            <i class="fas fa-store logo-icon-animated"></i>
+            Kopesa <span class="destaque">express</span>
+        </div>
+        <div class="header-actions">
+            <span id="badge-utilizador" class="badge-user"></span>
+            
+            <!-- Botão de Carrinho -->
+            <button class="icon-btn oculto" id="btn-carrinho" onclick="abrirCarrinho()" title="Carrinho">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="badge-carrinho" class="badge-count">0</span>
+            </button>
+            
+            <!-- Botão de Acesso Admin -->
+            <button class="icon-btn" id="btn-admin-login" onclick="solicitarPinAdmin()" title="Painel Admin">
+                <i class="fas fa-shield-alt"></i>
+            </button>
+            
+            <!-- Botão de Logout -->
+            <button class="icon-btn oculto" id="btn-logout" onclick="realizarLogout()" title="Terminar Sessão">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="app-main">
+
+        <!-- 1. ECRÃ DE AUTENTICAÇÃO / LOGIN / CADASTRO -->
+        <section id="ecra-auth" class="auth-card animate-fade">
+            <div class="auth-header">
+                <h2>Bem-vindo à <span class="destaque-texto">Kopesa</span></h2>
+                <p>A sua plataforma de marketplace minimalista</p>
+            </div>
+
+            <div class="tabs-auth">
+                <button type="button" class="tab-btn ativo" id="tab-entrar" onclick="mudarModoAuth('entrar')">Entrar</button>
+                <button type="button" class="tab-btn" id="tab-criar" onclick="mudarModoAuth('criar')">Criar Conta</button>
+            </div>
+
+            <form onsubmit="processarAutenticacao(event)">
+                <div class="form-group">
+                    <label id="label-contacto">Telefone ou Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user icon-input"></i>
+                        <input type="text" id="auth-contacto" required placeholder="Insira o seu contacto">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Palavra-passe</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock icon-input"></i>
+                        <input type="password" id="auth-password" required placeholder="********">
+                    </div>
+                </div>
+
+                <div class="form-group oculto" id="grupo-nome">
+                    <label>Nome Completo</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card icon-input"></i>
+                        <input type="text" id="auth-nome" placeholder="O seu nome">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Conta</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-users-cog icon-input"></i>
+                        <select id="auth-perfil" required>
+                            <option value="">-- Selecione o Tipo de Conta --</option>
+                            <option value="cliente">Cliente / Comprador</option>
+                            <option value="vendedor">Vendedor / Loja</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-principal" id="btn-submit-auth">
+                    Entrar na Plataforma <i class="fas fa-arrow-right icon-btn-right"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- 2. ECRÃ DE ESCOLHA INICIAL -->
+        <section id="ecra-escolha" class="auth-card oculto animate-scale">
+            <div class="auth-header">
+                <h2>Painel Principal</h2>
+                <p>Escolha como deseja navegar hoje</p>
+            </div>
+            
+            <div class="menu-choice-grid">
+                <button class="btn-choice-card" onclick="irParaMarketplace()">
+                    <div class="choice-icon"><i class="fas fa-store"></i></div>
+                    <div class="choice-info">
+                        <h3>Kopesa Market</h3>
+                        <p>Explore produtos e faça compras</p>
+                    </div>
+                </button>
+
+                <button class="btn-choice-card secondary" onclick="irParaPainelVendedor()">
+                    <div class="choice-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="choice-info">
+                        <h3>Painel de Vendedor</h3>
+                        <p>Acompanhe métricas e estatísticas</p>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. ECRÃ DO KOPESA MARKET -->
+        <section id="ecra-cliente" class="ecra-ativo oculto animate-fade">
+            <div class="banner-bemvindo">
+                <div class="banner-info">
+                    <h3>Kopesa Market</h3>
+                    <p>Encontre os melhores produtos. A entrega e receção são acordadas diretamente com o vendedor.</p>
+                </div>
+                <div class="banner-actions">
+                    <button class="btn-principal btn-sm" onclick="abrirModalNovoProduto()">
+                        <i class="fas fa-plus-circle"></i> Publicar Produto
+                    </button>
+                    <button class="btn-secundario btn-sm" onclick="voltarParaEscolha()">
+                        <i class="fas fa-bars"></i> Menu
+                    </button>
+                </div>
+            </div>
+
+            <!-- BARRA DE PESQUISA DINÂMICA -->
+            <div class="search-bar-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="input-pesquisa-produto" placeholder="Pesquisar produto pelo nome..." oninput="filtrarProdutosMarketplace()">
+            </div>
+
+            <div class="section-title-flex">
+                <h4>Produtos Disponíveis</h4>
+                <span class="badge-pulse"><i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 4px;"></i> Ao vivo</span>
+            </div>
+            
+            <!-- Grelha dos produtos -->
+            <div class="grid-produtos" id="lista-produtos-cliente">
+                <!-- Injeção Dinâmica -->
+            </div>
+        </section>
+        
+        <!-- 4. ECRÃ DO VENDEDOR / LOJISTA -->
+        <section id="ecra-vendedor" class="ecra-ativo oculto animate-fade">
+            <div class="painel-container">
+                <div class="painel-header-flex">
+                    <div>
+                        <h2>Painel do Lojista</h2>
+                        <p>Resumo da sua atividade comercial</p>
+                    </div>
+                    <button class="btn-secundario" onclick="voltarParaEscolha()"><i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                        <div>
+                            <span>Total Publicados</span>
+                            <h3 id="stat-total-produtos">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fas fa-check-circle"></i></div>
+                        <div>
+                            <span>Estado das Vendas</span>
+                            <h3 style="font-size: 1rem; color: #4ade80;">Ativo nas Vendas</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ECRÃ DO ADMINISTRADOR -->
+        <section id="ecra-admin" class="ecra-ativo oculto animate-fade">
+            <div class="painel-container">
+                <div class="painel-header-flex">
+                    <div>
+                        <h2>Painel Administrativo</h2>
+                        <p>Gestão de comissões e levantamentos</p>
+                    </div>
+                    <button class="btn-secundario" onclick="irParaHome()"><i class="fas fa-arrow-left"></i> Voltar</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                        <div>
+                            <span>Vendas Globais</span>
+                            <h3 id="admin-total-vendas">0 Kz</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fas fa-wallet"></i></div>
+                        <div>
+                            <span>Comissões (Criador)</span>
+                            <h3 id="admin-comissoes" style="color: #4ade80;">0 Kz</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-card admin-saque-card">
+                    <h3>Solicitação de Saque / Levantamento</h3>
+                    <p>Associado a Conta Bancária ou Multicaixa Express (MCX)</p>
+                    <div class="form-group">
+                        <label>IBAN ou Telemóvel MCX</label>
+                        <input type="text" id="admin-conta-saque" placeholder="AO06 ... ou 923...">
+                    </div>
+                    <div class="form-group">
+                        <label>Valor a Sacar (Kz)</label>
+                        <input type="number" id="admin-valor-saque" placeholder="0">
+                    </div>
+                    <button class="btn-principal" onclick="realizarSaqueAdmin()">Solicitar Levantamento</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL PARA ADICIONAR PRODUTO -->
+    <div id="modal-produto" class="modal oculto">
+        <div class="modal-conteudo animate-scale">
+            <div class="modal-header">
+                <h3>Publicar Novo Produto</h3>
+                <button class="close-btn" onclick="fecharModalNovoProduto()">&times;</button>
+            </div>
+            <form onsubmit="guardarNovoProduto(event)">
+                <div class="form-group">
+                    <label>Nome do Produto</label>
+                    <input type="text" id="prod-nome" required placeholder="Ex: Ténis Nike Air Max">
+                </div>
+                <div class="form-group">
+                    <label>Valor (Kz)</label>
+                    <input type="number" id="prod-valor" required placeholder="Ex: 25000">
+                </div>
+                <div class="form-group">
+                    <label>Número do Proprietário</label>
+                    <input type="text" id="prod-contacto" required placeholder="Ex: 923456789">
+                </div>
+                <div class="form-group">
+                    <label>Foto do Produto</label>
+                    <div class="file-upload-box">
+                        <input type="file" id="prod-foto" accept="image/*">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Clique para carregar a foto do produto</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-principal">
+                    <i class="fas fa-paper-plane"></i> Publicar no Kopesa Market
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DO CARRINHO -->
+    <div id="modal-carrinho" class="modal oculto">
+        <div class="modal-conteudo animate-scale">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-bag" style="color: var(--cor-destaque);"></i> O seu Carrinho</h3>
+                <button class="close-btn" onclick="fecharCarrinho()">&times;</button>
+            </div>
+            <div id="itens-carrinho-lista" class="carrinho-scroll">
+                <!-- Itens -->
+            </div>
+            <div class="total-row">
+                <span>Total Estimado:</span>
+                <strong id="carrinho-total-valor">0 Kz</strong>
+            </div>
+            <button class="btn-principal" onclick="finalizarSolicacaoCompra()">
+                Finalizar e Contactar Vendedor
+            </button>
+        </div>
+    </div>
+
+    <!-- Ficheiro JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

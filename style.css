@@ -1,0 +1,724 @@
+/* ==========================================================================
+   IDENTIDADE VISUAL MINIMALISTA, DINÂMICA & MODERNA - KOPESA EXPRESS
+   ========================================================================== */
+
+:root {
+    --bg-main: #0d0a09;          
+    --bg-card: #161210;          
+    --bg-card-hover: #1f1a17;    
+    --cor-destaque: #c86336;     
+    --cor-destaque-hover: #e0713f;
+    --texto-claro: #f7f4f0;      
+    --texto-cinza: #a3978c;      
+    --borda-subtil: rgba(200, 99, 54, 0.15);
+    --borda-input: #261e19;
+    --sombra-card: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--texto-claro);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES E ÍCONES EM MOVIMENTO
+   ========================================================================== */
+.animate-fade {
+    animation: fadeIn 0.35s ease-in-out;
+}
+
+.animate-scale {
+    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ÍCONE FLUTUANTE EM MOVIMENTO */
+.floating-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    background: var(--cor-destaque);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(200, 99, 54, 0.4);
+    cursor: pointer;
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+.floating-widget:hover {
+    transform: scale(1.1);
+    background: var(--cor-destaque-hover);
+}
+
+.icon-moving {
+    font-size: 1.2rem;
+    animation: bounceRight 2s infinite ease-in-out;
+}
+
+@keyframes bounceRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+}
+
+/* Ícone animado no logótipo */
+.logo-icon-animated {
+    color: var(--cor-destaque);
+    margin-right: 6px;
+    animation: pulseGlow 3s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS (ALERTAS DINÂMICOS)
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--bg-card);
+    border: 1px solid var(--cor-destaque);
+    color: var(--texto-claro);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    box-shadow: var(--sombra-card);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.app-header {
+    background: rgba(22, 18, 16, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borda-subtil);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-texto {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    color: var(--texto-claro);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.logo-texto .destaque {
+    color: var(--cor-destaque);
+    font-weight: 700;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.badge-user {
+    font-size: 0.8rem;
+    color: var(--texto-cinza);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.icon-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--borda-subtil);
+    color: var(--texto-claro);
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+    background: var(--cor-destaque);
+    border-color: var(--cor-destaque);
+    transform: translateY(-2px);
+}
+
+.badge-count {
+    background: var(--cor-destaque);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    border: 2px solid var(--bg-main);
+}
+
+/* ==========================================================================
+   ESTRUTURA PRINCIPAL
+   ========================================================================== */
+.app-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.auth-card {
+    background: var(--bg-card);
+    padding: 36px 30px;
+    border-radius: 18px;
+    border: 1px solid var(--borda-subtil);
+    box-shadow: var(--sombra-card);
+    width: 100%;
+    max-width: 440px;
+}
+
+.auth-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--texto-claro);
+    letter-spacing: -0.4px;
+}
+
+.auth-header .destaque-texto {
+    color: var(--cor-destaque);
+}
+
+.auth-header p {
+    font-size: 0.85rem;
+    color: var(--texto-cinza);
+    margin-top: 4px;
+    margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   BARRA DE PESQUISA
+   ========================================================================== */
+.search-bar-container {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--texto-cinza);
+    font-size: 0.9rem;
+}
+
+.search-bar-container input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    background: var(--bg-card);
+    border: 1px solid var(--borda-subtil);
+    border-radius: 12px;
+    color: white;
+    font-size: 0.88rem;
+    transition: all 0.2s ease;
+}
+
+.search-bar-container input:focus {
+    border-color: var(--cor-destaque);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 99, 54, 0.15);
+}
+
+/* ==========================================================================
+   FORMULÁRIOS, BOTÕES E CARTÕES
+   ========================================================================== */
+.tabs-auth {
+    display: flex;
+    background: #0d0a09;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--borda-input);
+    margin-bottom: 20px;
+    gap: 4px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--texto-cinza);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.ativo {
+    background: var(--cor-destaque);
+    color: white;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icon-input {
+    position: absolute;
+    left: 14px;
+    color: var(--texto-cinza);
+    font-size: 0.9rem;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    background: #0d0a09;
+    border: 1px solid var(--borda-input);
+    border-radius: 10px;
+    color: white;
+    font-size: 0.88rem;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: var(--cor-destaque);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 99, 54, 0.15);
+}
+
+.btn-principal {
+    width: 100%;
+    background: var(--cor-destaque);
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-principal:hover {
+    background: var(--cor-destaque-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(200, 99, 54, 0.3);
+}
+
+.btn-secundario {
+    background: transparent;
+    border: 1px solid var(--borda-input);
+    color: var(--texto-claro);
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secundario:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--cor-destaque);
+}
+
+.btn-sm {
+    width: auto;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+}
+
+.btn-perigo {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-perigo:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* ==========================================================================
+   ECRÃ DE ESCOLHA & MARKETPLACE
+   ========================================================================== */
+.menu-choice-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-choice-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #0d0a09;
+    border: 1px solid var(--borda-subtil);
+    padding: 16px;
+    border-radius: 12px;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-choice-card:hover {
+    border-color: var(--cor-destaque);
+    transform: translateY(-2px);
+    background: var(--bg-card-hover);
+}
+
+.choice-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--cor-destaque);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.btn-choice-card.secondary .choice-icon {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--cor-destaque);
+}
+
+.choice-info h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.choice-info p {
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+    margin: 0;
+}
+
+.banner-bemvindo {
+    background: var(--bg-card);
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid var(--borda-subtil);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.banner-info h3 {
+    font-size: 1.2rem;
+    color: var(--texto-claro);
+}
+
+.banner-info p {
+    font-size: 0.8rem;
+    color: var(--texto-cinza);
+    margin-top: 4px;
+}
+
+.banner-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.section-title-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.badge-pulse {
+    font-size: 0.7rem;
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.1);
+    padding: 4px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.grid-produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.produto-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.produto-card:hover {
+    border-color: var(--cor-destaque);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.produto-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #0d0a09;
+    margin-bottom: 10px;
+}
+
+.produto-info-bottom {
+    margin-top: auto;
+}
+
+/* ==========================================================================
+   PAINEL DO VENDEDOR & STATS
+   ========================================================================== */
+.painel-container {
+    width: 100%;
+}
+
+.painel-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid var(--borda-subtil);
+    margin-bottom: 16px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(200, 99, 54, 0.15);
+    color: var(--cor-destaque);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.stat-icon.success {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+}
+
+.stat-card span {
+    font-size: 0.72rem;
+    color: var(--texto-cinza);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card h3 {
+    font-size: 1.4rem;
+    color: var(--texto-claro);
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   MODAIS
+   ========================================================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 10, 9, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-conteudo {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 420px;
+    padding: 26px;
+    border-radius: 16px;
+    border: 1px solid var(--borda-subtil);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: var(--texto-cinza);
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.file-upload-box {
+    border: 1px dashed var(--borda-subtil);
+    padding: 16px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    background: #0d0a09;
+    cursor: pointer;
+}
+
+.file-upload-box input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+.file-upload-box i {
+    font-size: 1.4rem;
+    color: var(--cor-destaque);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.file-upload-box span {
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+}
+
+.carrinho-scroll {
+    max-height: 220px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding-right: 4px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px 0;
+    font-size: 0.95rem;
+}
+
+.total-row strong {
+    color: var(--cor-destaque);
+}
